@@ -6,15 +6,19 @@ const { hashSync } = require("bcrypt");
 const register = Router();
 
 register.post("/", checkUser("register"), (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, type } = req.body;
   (async () => {
     try {
       const newUser = new User({
         username: username,
         email: email,
         password: hashSync(password, 12),
-        role: "user",
+        role: type,
       });
+
+      if (type == "hospital") {
+        newUser.isPending = true;
+      }
 
       const savedUser = await newUser.save();
       res.status(201).json({

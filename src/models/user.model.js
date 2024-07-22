@@ -7,6 +7,9 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
+    fullName: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
@@ -49,10 +52,8 @@ const userSchema = new Schema(
         ref: "doctor",
       },
     ],
-    fullName: {
-      type: String,
-    },
-    review: [
+
+    reviews: [
       {
         type: Schema.Types.ObjectId,
         ref: "review",
@@ -64,6 +65,9 @@ const userSchema = new Schema(
         ref: "appointment",
       },
     ],
+    isPending: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

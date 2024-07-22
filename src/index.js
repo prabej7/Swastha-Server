@@ -9,10 +9,14 @@ const register = require("./routes/register.routes");
 const login = require("./routes/login.routes");
 const document = require("./routes/document.routes");
 const patientDetails = require("./routes/patient/patients.routes");
-const getUser = require("./routes/allUser.routes");
+const getUser = require("./routes/getUser.routes");
 const addDoctor = require("./routes/admin/addDoctor.routes");
 const deleteDoctor = require("./routes/admin/deleteDoctor.routes");
 const updateDetails = require("./routes/admin/updateDetails.routes");
+const addReview = require("./routes/addReview.routes");
+const updateLocation = require("./routes/updateLocation.routes");
+const getAllUser = require("./routes/getAllUser.routes");
+const deleteAccount = require("./routes/deleteAccount.routes");
 
 const app = express();
 
@@ -33,7 +37,10 @@ app.use("/user", getUser);
 app.use("/add-doctor", addDoctor);
 app.use("/delete-doctor", deleteDoctor);
 app.use("/update-details", updateDetails);
-
+app.use("/add-review", addReview);
+app.use("/update-location", updateLocation);
+app.use("/get-all-user", getAllUser);
+app.use("/delete-user", deleteAccount);
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -4,6 +4,7 @@ const checkUser = (route) => {
     const isUser = await User.findOne({
       $or: [
         { username: req.body.username },
+        { username: req.body.emai },
         { email: req.body.username },
         { email: req.body.email },
       ],
@@ -11,7 +12,9 @@ const checkUser = (route) => {
 
     if (isUser) {
       if (route == "register") {
-        return res.status(404).json({ error: "User already exists." });
+        return res
+          .status(404)
+          .json({ error: "User with same credentials already exists." });
       } else {
         return next();
       }

@@ -7,12 +7,13 @@ const updateDetails = Router();
 updateDetails.post("/", upload.single("file"), (req, res) => {
   (async () => {
     try {
-      const { username, email, fullName, id } = req.body;
+      const { username, email, fullName, id, address } = req.body;
 
       let updateFields = {};
       if (username !== undefined) updateFields.username = username;
       if (email !== undefined) updateFields.email = email;
       if (fullName !== undefined) updateFields.fullName = fullName;
+      if (address !== undefined) updateFields.address = address;
 
       if (Object.keys(updateFields).length > 0) {
         await User.updateOne({ _id: id }, { $set: updateFields });
