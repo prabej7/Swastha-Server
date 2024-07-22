@@ -4,7 +4,7 @@ const addDoctor = Router();
 const upload = require("../../config/multer");
 const Doctor = require("../../models/doctors.model");
 const User = require("../../models/user.model");
-
+const uploadToCloud = require("../../utils/upload.utils");
 addDoctor.post("/", upload.single("file"), (req, res) => {
   (async () => {
     if (!req.file) {
@@ -16,7 +16,7 @@ addDoctor.post("/", upload.single("file"), (req, res) => {
     const newDoctor = new Doctor({
       fullName: fullName,
       type: type,
-      img: req.file.filename,
+      img: await uploadToCloud(req.file),
       hospital: hospital_id,
       present: false,
     });

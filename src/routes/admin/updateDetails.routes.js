@@ -3,7 +3,7 @@ const User = require("../../models/user.model");
 const upload = require("../../config/multer");
 const deleteFile = require("../../utils/deleteFile.utils");
 const updateDetails = Router();
-
+const uploadToCloud = require("../../utils/upload.utils");
 updateDetails.post("/", upload.single("file"), (req, res) => {
   (async () => {
     try {
@@ -23,7 +23,10 @@ updateDetails.post("/", upload.single("file"), (req, res) => {
         const user = await User.findOne({ _id: id });
         const oldImg = user.dp;
         deleteFile(oldImg);
-        await User.updateOne({ _id: id }, { $set: { dp: req.file.filename } });
+        await User.updateOne(
+          { _id: id },
+          { $set: { dp: await uploadToCloud(req.file) } }
+        );
       }
       res.status(200).send({ msg: "User updated successfully" });
     } catch (error) {

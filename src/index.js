@@ -17,6 +17,7 @@ const addReview = require("./routes/addReview.routes");
 const updateLocation = require("./routes/updateLocation.routes");
 const getAllUser = require("./routes/getAllUser.routes");
 const deleteAccount = require("./routes/deleteAccount.routes");
+const updateProfilePic = require("./routes/admin/updateProfilePic.routes");
 
 const app = express();
 
@@ -41,6 +42,8 @@ app.use("/add-review", addReview);
 app.use("/update-location", updateLocation);
 app.use("/get-all-user", getAllUser);
 app.use("/delete-user", deleteAccount);
+app.use("/update-profile-pic", updateProfilePic);
+
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

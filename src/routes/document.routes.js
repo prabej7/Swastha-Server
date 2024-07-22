@@ -2,6 +2,8 @@ const { Router } = require("express");
 const upload = require("../config/multer");
 const checkUser = require("../middlewares/checkUser.middleware");
 const User = require("../models/user.model");
+const uploadToCloud = require("../utils/upload.utils");
+
 const document = Router();
 
 document.post("/", upload.single("file"), (req, res) => {
@@ -11,7 +13,7 @@ document.post("/", upload.single("file"), (req, res) => {
         return res.status(404).json({ error: "No file was provided!" });
       }
       const user = await User.findOne({ _id: req.body.id });
-      user.documents.push(req.file.filename);
+      user.documents.push(await uploadToCloud(req.file));
       await user.save();
       res.status(200).json({ msg: "Document updated successfully!" });
     } catch (err) {

@@ -4,7 +4,7 @@ const User = require("../../models/user.model");
 const Doctor = require("../../models/doctors.model");
 const Appointment = require("../../models/appointment.model");
 const upload = require("../../config/multer");
-
+const uploadToCloud = require("../../utils/upload.utils");
 const patientDetails = Router();
 
 patientDetails.post("/", upload.single("file"), (req, res) => {
@@ -22,7 +22,7 @@ patientDetails.post("/", upload.single("file"), (req, res) => {
       });
 
       if (req.file) {
-        newPatients.receipts = req.file.filename;
+        newPatients.receipts = await uploadToCloud(req.file);
       }
 
       const savedPatients = await newPatients.save();
